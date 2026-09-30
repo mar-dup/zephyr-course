@@ -1,0 +1,14 @@
+/ {
+    leds {
+        compatible = "gpio-leds";
+
+        led_4: led_4 {
+            gpios = <&gpio0 10 GPIO_ACTIVE_LOW>;
+            label = "My Lesson 4 LED";
+        };
+    };
+
+    aliases {
+        app-led = &led_4;
+    };
+};
