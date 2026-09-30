@@ -1,3 +1,19 @@
+# LESSON 4 ---------------------------------------------------------------------
+menuconfig LED_HEARTBEAT
+    bool "LED heartbeat"
+    default y
+
+if LED_HEARTBEAT
+
+    config APP_HEARTBEAT_PERIOD_MS
+        int "App heartbeat period time (ms)"
+        range 100 2000
+        default 500
+
+endif # LED_HEARTBEAT
+
+
+# LESSON 3 ---------------------------------------------------------------------
 # LED Subsystem --->
 #     LED blink sleep time (1s (medium)) --->   (250ms,500ms,1s,2s)
 #     [ ] Advanced LED settings --->
@@ -9,7 +25,7 @@
 
 menuconfig LED_SUBSYSTEM
     bool "LED Subsystem"
-    default y
+    default n
 
 if LED_SUBSYSTEM
 
