@@ -1,0 +1,6 @@
+board:
+  name: board_scratch
+  full_name: board that was done from scratch
+  vendor: amazingSoft
+  socs:
+  - name: esp32h2

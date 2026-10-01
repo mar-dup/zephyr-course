@@ -1,0 +1,15 @@
+/dts-v1/;
+
+#include <espressif/esp32h2/esp32h2_mini_h4.dtsi>
+#include <espressif/partitions_0x0_default.dtsi>
+
+/ {
+	model = "My board";
+	compatible = "amazingSoft,my_board";
+
+	chosen {
+		zephyr,sram = &sramhp;
+		zephyr,flash = &flash0;
+		zephyr,code-partition = &slot0_partition;
+    };
+};
