@@ -1,0 +1,6 @@
+board:
+  name: board_copy
+  full_name: board that was copied
+  vendor: amazingSoft
+  socs:
+  - name: esp32h2
