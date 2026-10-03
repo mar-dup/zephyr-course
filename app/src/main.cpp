@@ -2,8 +2,11 @@
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
+#include "zephyr/device.h"
 #include "zephyr/drivers/sensor.h"
 //#include "zephyr/device.h"
+
+#include "our_driver.h"
 
 #define SLEEP_TIME_MS 2000
 
@@ -29,12 +32,19 @@ int main(void)
         LOG_INF("ret: %d\n", ret);
         k_msleep(SLEEP_TIME_MS);
 
+        printInternal(driver);
+
         /* turn off - sleep */
         LOG_INF("turn LED off");
         ret = sensor_channel_get(driver, SENSOR_CHAN_AMBIENT_TEMP, &val);
         LOG_INF("ret: %d\n", ret);
-        k_msleep(SLEEP_TIME_MS + 1000);
+        k_msleep(SLEEP_TIME_MS);
 
+        if (getTimesOn(driver) >= 10)
+        {
+            resetTimesOn(driver);
+            LOG_INF("resetted times on\n");
+        }
     }
 
     /* should not be reached */
