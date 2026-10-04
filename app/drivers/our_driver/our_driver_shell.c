@@ -1,4 +1,7 @@
+#include "our_driver.h"
 #include "zephyr/drivers/sensor.h"
+#include "zephyr/shell/shell_string_conv.h"
+#include <stdint.h>
 #include <zephyr/shell/shell.h>
 #include <sys/errno.h>
 
@@ -115,6 +118,58 @@ static int cmd_info(
     return 0;
 }
 
+/* CMDs for API Extension *************************************************** */
+static int cmd_print_internal(
+    const struct shell *sh,
+    int argc,
+    char** argv)
+{
+    shell_info(sh, "INFO function");
+
+    const struct device *dev = shell_device_get_binding(argv[1]);
+    if (NULL == dev)
+    {
+        shell_error(sh, "could not find %s", argv[1]);
+
+        return EINVAL;
+    }
+
+    printInternal(dev);
+
+    return 0;
+}
+
+static int cmd_set(
+    const struct shell *sh,
+    int argc,
+    char** argv)
+{
+    shell_info(sh, "SET function");
+
+    const struct device *dev = shell_device_get_binding(argv[1]);
+    if (NULL == dev)
+    {
+        shell_error(sh, "could not find %s", argv[1]);
+
+        return EINVAL;
+    }
+
+    int err;
+    /* parse second arg */
+    int64_t num_to_set = shell_strtol(argv[2], 10, &err);
+
+    /* needs to be <= uint32max and >=0 */
+    bool valid = (num_to_set >= 0) && (num_to_set <= UINT32_MAX);
+    if (!valid)
+    {
+        return EINVAL;
+    }
+
+    setCounter(dev, num_to_set);
+
+    return 0;
+}
+
 /* REGISTER COMMANDS ******************************************************** */
 SHELL_STATIC_SUBCMD_SET_CREATE(our_driver_subcmd,
         SHELL_CMD_ARG(\
@@ -144,6 +199,21 @@ SHELL_STATIC_SUBCMD_SET_CREATE(our_driver_subcmd,
             "Get Info about the given device",\
             cmd_info,\
             2,\
+            0),
+        /* Extended API */
+        SHELL_CMD_ARG(\
+            internal,\
+            NULL,\
+            "Show internal state",\
+            cmd_print_internal,\
+            2,\
+            0),
+        SHELL_CMD_ARG(\
+            set,\
+            NULL,\
+            "Set internal state to",\
+            cmd_set,\
+            3,\
             0),
         SHELL_SUBCMD_SET_END,
 );
