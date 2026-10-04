@@ -8,7 +8,7 @@
 
 #include "our_driver.h"
 
-#define SLEEP_TIME_MS 2000
+#define SLEEP_TIME_MS 5000
 
 LOG_MODULE_REGISTER(main, LOG_LEVEL_INF);
 
@@ -26,6 +26,12 @@ int main(void)
     /* MAIN LOOP */
     while (1)
     {
+        /*
+         *  Disabled for Lesson 07
+         *  it would spam in console
+         *  and we want to use the Shell
+         */
+#if 0
         /* turn on  - sleep */
         LOG_INF("turn LED on");
         ret = sensor_sample_fetch(driver);
@@ -45,6 +51,9 @@ int main(void)
             resetTimesOn(driver);
             LOG_INF("resetted times on\n");
         }
+#endif
+
+        k_msleep(SLEEP_TIME_MS);
     }
 
     /* should not be reached */
