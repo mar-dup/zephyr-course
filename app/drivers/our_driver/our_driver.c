@@ -1,6 +1,7 @@
 #include "zephyr/device.h"
 #include "zephyr/logging/log_core.h"
 #include <stdint.h>
+#include <sys/errno.h>
 #include <zephyr/drivers/sensor.h>
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/kernel.h>
@@ -83,6 +84,20 @@ void resetTimesOn(const struct device *dev)
    struct our_driver_data *data = dev->data;
 
    data->on_state_counter = 0;
+}
+
+int setCounter(const struct device *dev, int64_t count)
+{
+   struct our_driver_data *data = dev->data;
+
+   if (count < 0)
+   {
+      return EINVAL;
+   }
+
+   data->on_state_counter = count;
+
+   return 0;
 }
 
 /* REGISTER API ************************************************************* */
