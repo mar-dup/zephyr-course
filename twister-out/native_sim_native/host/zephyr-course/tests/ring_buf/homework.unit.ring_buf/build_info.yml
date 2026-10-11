@@ -1,0 +1,47 @@
+cmake:
+  application:
+    configuration-dir: '/home/marvin/workspace/courses/iomico_zephyr_foundation/zephyr-course/tests/ring_buf'
+    source-dir: '/home/marvin/workspace/courses/iomico_zephyr_foundation/zephyr-course/tests/ring_buf'
+  board:
+    name: 'native_sim'
+    path:
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/deps/zephyr/boards/native/native_sim'
+    qualifiers: 'native'
+    revision: ''
+  devicetree:
+    bindings-dirs:
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/deps/zephyr/dts/bindings'
+    files:
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/deps/zephyr/boards/native/native_sim/native_sim.dts'
+    include-dirs:
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/deps/zephyr/include'
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/deps/zephyr/include/zephyr'
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/deps/zephyr/dts/common'
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/deps/zephyr/dts/vendor'
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/deps/zephyr/dts/rx'
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/deps/zephyr/dts/x86'
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/deps/zephyr/dts/xtensa'
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/deps/zephyr/dts/sparc'
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/deps/zephyr/dts/riscv'
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/deps/zephyr/dts/posix'
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/deps/zephyr/dts/arm64'
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/deps/zephyr/dts/arm'
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/deps/zephyr/dts/arc'
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/deps/zephyr/dts'
+  kconfig:
+    extra-user-files:
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/zephyr-course/twister-out/native_sim_native/host/zephyr-course/tests/ring_buf/homework.unit.ring_buf/twister/testsuite_extra.conf'
+    files:
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/deps/zephyr/boards/native/native_sim/native_sim_defconfig'
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/zephyr-course/tests/ring_buf/prj.conf'
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/zephyr-course/twister-out/native_sim_native/host/zephyr-course/tests/ring_buf/homework.unit.ring_buf/twister/testsuite_extra.conf'
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/zephyr-course/twister-out/native_sim_native/host/zephyr-course/tests/ring_buf/homework.unit.ring_buf/zephyr/misc/generated/extra_kconfig_options.conf'
+    user-files:
+     - '/home/marvin/workspace/courses/iomico_zephyr_foundation/zephyr-course/tests/ring_buf/prj.conf'
+  toolchain:
+    name: 'host'
+    path: ''
+  zephyr:
+    version: '4.3.0'
+    zephyr-base: '/home/marvin/workspace/courses/iomico_zephyr_foundation/deps/zephyr'
+version: '0.1.0'
