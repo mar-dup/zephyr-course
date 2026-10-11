@@ -1,0 +1,1 @@
+"hal_espressif":"/home/marvin/workspace/courses/iomico_zephyr_foundation/deps/modules/hal/espressif":"/home/marvin/workspace/courses/iomico_zephyr_foundation/deps/modules/hal/espressif/zephyr"
