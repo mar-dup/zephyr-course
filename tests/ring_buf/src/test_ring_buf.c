@@ -156,3 +156,58 @@ ZTEST(ring_buf_boundaries, test_is_full_after_fill)
 	zexpect_true(rb_is_full(), "expected true");
 	zexpect_equal(rb_count(), 4, "expected ringbuffer with size 4");
 }
+
+/*
+ * ============================================================================
+ * Test Suite: ring_buf_inval
+ *
+ * Tests several error cases of the API
+ * ============================================================================
+ */
+ZTEST_SUITE(ring_buf_inval, NULL, NULL, before, NULL, NULL);
+
+
+/* rb_init function */
+ZTEST(ring_buf_inval, test_init_0)
+{
+	zexpect_equal(rb_init(0), -EINVAL, "expected -EINVAL");
+}
+
+ZTEST(ring_buf_inval, test_init_too_big)
+{
+	zexpect_equal(rb_init(RING_BUF_MAX_CAPACITY + 1), -EINVAL, "expected -EINVAL");
+}
+
+/* rb_pop function */
+ZTEST(ring_buf_inval, test_pop_null)
+{
+	/* Preparation: push one value */
+	zassert_ok(rb_push(1), "first push needs to be successfull");
+
+	/* Test: pop with NULL */
+	zexpect_equal(rb_pop(NULL), -EINVAL, "expected -EINVAL");
+}
+
+ZTEST(ring_buf_inval, test_pop_buffer_empty)
+{
+	int v = 0xff;
+	/* Test: pop with NULL */
+	zexpect_equal(rb_pop(&v), -ENODATA, "expected -EINVAL");
+}
+
+/* rb_peek function */
+ZTEST(ring_buf_inval, test_peek_null)
+{
+	/* Preparation: push one value */
+	zassert_ok(rb_push(1), "first push needs to be successfull");
+
+	/* Test: peek with NULL */
+	zexpect_equal(rb_peek(NULL), -EINVAL, "expected -EINVAL");
+}
+
+ZTEST(ring_buf_inval, test_peek_buffer_empty)
+{
+	int v = 0xff;
+	/* Test: peek with NULL */
+	zexpect_equal(rb_peek(&v), -ENODATA, "expected -EINVAL");
+}
