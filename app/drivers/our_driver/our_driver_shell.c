@@ -146,6 +146,8 @@ static int cmd_set(
 {
     shell_info(sh, "SET function");
 
+    const int MAX_VAL = 40;
+
     const struct device *dev = shell_device_get_binding(argv[1]);
     if (NULL == dev)
     {
@@ -159,9 +161,12 @@ static int cmd_set(
     int64_t num_to_set = shell_strtol(argv[2], 10, &err);
 
     /* needs to be <= uint32max and >=0 */
-    bool valid = (num_to_set >= 0) && (num_to_set <= UINT32_MAX);
+    bool valid = (num_to_set >= 0) && (num_to_set <= MAX_VAL);
     if (!valid)
     {
+        shell_error(sh, "Value %lld is out of range (0 .. %d)",
+            num_to_set, MAX_VAL);
+
         return EINVAL;
     }
 
@@ -211,7 +216,7 @@ SHELL_STATIC_SUBCMD_SET_CREATE(our_driver_subcmd,
         SHELL_CMD_ARG(\
             set,\
             NULL,\
-            "Set internal state to",\
+            "Set internal state to VAL (0..40)",\
             cmd_set,\
             3,\
             0),
