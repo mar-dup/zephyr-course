@@ -37,14 +37,6 @@ static int cmd_fetch(
 {
     shell_info(sh, "FETCH function");
 
-    /* we do not need to check the ARGC, this is done for us */
-
-//  if (argc != 2) {
-//      shell_error(sh, "Missing argument");
-
-//      return EINVAL;
-//  }
-
     const struct device *dev = shell_device_get_binding(argv[1]);
     if (NULL == dev)
     {
@@ -57,8 +49,11 @@ static int cmd_fetch(
     if (ret != 0)
     {
         shell_error(sh, "Got error code \"%d\" of sensor_sample_fetch", ret);
+
         return EFAULT;
     }
+
+    shell_info(sh, "sensor_sample_fetch ret: %d", ret);
 
     return 0;
 }
@@ -87,6 +82,8 @@ static int cmd_read(
         shell_error(sh, "Got error code \"%d\" of sensor_sample_fetch", ret);
         return EFAULT;
     }
+
+    shell_info(sh, "sensor_channel_get ret: %d", ret);
 
     return 0;
 }
@@ -141,6 +138,8 @@ SHELL_STATIC_SUBCMD_SET_CREATE(our_driver_subcmd,
         SHELL_CMD_ARG(\
             info,\
             NULL,\
+            "Usage: sensor read <DEVICE>\n"
+            " e.g.: sensor read our_driver0\n"
             "Get Info about the given device",\
             cmd_info,\
             2,\
