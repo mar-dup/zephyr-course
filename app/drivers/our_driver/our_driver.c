@@ -9,11 +9,12 @@
 
 LOG_MODULE_REGISTER(our_driver, LOG_LEVEL_INF);
 
+#define TURN_ON  1
+#define TURN_OFF 0
+
 /* DRIVER STATIC DATA ******************************************************* */
 #define LED_APP  DT_ALIAS(app_led)
 static const struct gpio_dt_spec led_app = GPIO_DT_SPEC_GET(LED_APP,  gpios);
-
-static bool led_app_state = false;
 
 /* DRIVER API FUNCTIONS ***************************************************** */
 /* LED ON */
@@ -24,13 +25,7 @@ static int sample_fetch_my_impl(
    LOG_INF("hello from sample fetch (LED ON), channel %d", chan);
 
    /* turn LED on when it is off */
-   if (!led_app_state)
-   {
-      gpio_pin_toggle_dt(&led_app);
-      led_app_state = !led_app_state;
-   }
-
-   return 0;
+   return gpio_pin_set_dt(&led_app, TURN_ON);
 }
 /* turn LED off */
 static int channel_get_my_impl(
@@ -40,13 +35,8 @@ static int channel_get_my_impl(
 {
    LOG_INF("hello from channel get (LED OFF), channel %d", chan);
 
-   if (led_app_state)
-   {
-      gpio_pin_toggle_dt(&led_app);
-      led_app_state = !led_app_state;
-   }
-
-   return 0;
+   /* turn LED off */
+   return gpio_pin_set_dt(&led_app, TURN_OFF);
 }
 
 /* REGISTER API ************************************************************* */
